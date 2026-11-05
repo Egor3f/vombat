@@ -1,0 +1,33 @@
+mutation Login($login: String!, $password: String!, $code: String) {
+  auth(login: $login, password: $password, two_factor_auth_code: $code) {
+    response_status
+    error_message
+    two_factor_auth_is_needed
+  }
+}
+
+mutation Logout {
+  logout {
+    response_status
+    error_message
+  }
+}
+
+query Me {
+  me {
+    id
+    login
+    settings
+  }
+}
+
+mutation SaveSettings($settings: String) {
+  userSettings(settings: $settings)
+}
+
+mutation OAuthLogin($provider: String, $params: String) {
+  oAuth(provider: $provider, params: $params) {
+    response_status
+    error_message
+  }
+}

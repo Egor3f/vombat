@@ -1,0 +1,30 @@
+query Post($id: Int!) {
+  post(id: $id) {
+    ...PostFields
+  }
+}
+
+query Comments($postId: Int!) {
+  comments(post_id: $postId) {
+    sorting
+    list {
+      id
+      parent_id
+      rating
+      user_rating_value
+      reactions
+      my_reaction
+      content
+      media
+      status
+      removal_reason
+      created_at
+      is_ignoring
+      is_editable
+      user {
+        login
+        avatar
+      }
+    }
+  }
+}

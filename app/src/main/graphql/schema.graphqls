@@ -1,0 +1,3795 @@
+"""
+A type Post
+"""
+type Post {
+  """
+  The auto incremented Post ID
+  """
+  id: Int
+
+  """
+  The Title of the Post
+  """
+  title: String
+
+  """
+  The Body of the Post
+  """
+  content: String
+
+  """
+  Alias
+  """
+  alias: String
+
+  """
+  Rating
+  """
+  rating: Int
+
+  """
+  Pluses
+  """
+  pluses: Int
+
+  """
+  Minuses
+  """
+  minuses: Int
+
+  """
+  Comments Amount
+  """
+  comments_amount: Int
+
+  """
+  Post this one answers to
+  """
+  parent_id: Int
+
+  """
+  Comment this post answers to
+  """
+  parent_comment_id: Int
+
+  """
+  Amount of answer posts
+  """
+  answers_amount: Int
+
+  """
+  Series this post belongs to
+  """
+  series_id: Int
+
+  """
+  Order inside the series
+  """
+  series_position: Int
+
+  """
+  Series relation
+  """
+  series: Series
+
+  """
+  Author Id
+  """
+  user_id: Int
+
+  """
+  Tags List
+  """
+  tags: [Tag]
+
+  """
+  Rated State
+  """
+  user_rating_value: Int
+
+  """
+  Reaction counts as JSON
+  """
+  reactions_serialized: String
+
+  """
+  Reaction code left by the current user
+  """
+  my_reaction: Int
+
+  """
+  Is Post in Favorites
+  """
+  is_in_favorites: Boolean
+
+  """
+  Post Favorites Amount
+  """
+  in_favorites_amount: Int
+
+  """
+  Is Post Original
+  """
+  is_own: Boolean
+
+  """
+  Is Post Long
+  """
+  is_long_post: Boolean
+
+  """
+  Is NSFW
+  """
+  is_nsfw: Boolean
+
+  """
+  Is Cruel
+  """
+  is_cruel: Boolean
+
+  """
+  Is Politics
+  """
+  is_politics: Boolean
+
+  """
+  Is Sensitive Content Hidden
+  """
+  is_sensitive_content_hidden: Boolean
+
+  """
+  Is Blur Sensitive Content
+  """
+  is_blur_sensitive_content: Boolean
+
+  """
+  Is Imported
+  """
+  is_imported: Boolean
+
+  """
+  Is Post Editable
+  """
+  is_editable: Boolean
+
+  """
+  Is Post Deletable
+  """
+  is_can_delete: Boolean
+
+  """
+  Is Post Republishable
+  """
+  is_can_republish: Boolean
+
+  """
+  Date Created
+  """
+  created_at: String
+
+  """
+  Author Login
+  """
+  login: String
+
+  """
+  Author Avatar
+  """
+  avatar: String
+
+  """
+  Is Author Verified
+  """
+  is_user_verified: Boolean
+
+  """
+  Post Status
+  """
+  status: Int
+
+  """
+  User Group
+  """
+  user_group: Int
+
+  """
+  Microdata
+  """
+  microdata: String
+
+  """
+  Microdata Short (Listings)
+  """
+  microdata_short: String
+
+  """
+  Is Deleted
+  """
+  is_deleted: Boolean
+
+  """
+  Is Postponed
+  """
+  is_postponed: Boolean
+
+  """
+  Is Hidden for Editing
+  """
+  is_hidden_on_editing: Boolean
+
+  """
+  Is On Moderation
+  """
+  is_on_moderation: Boolean
+
+  """
+  Postponed Date
+  """
+  postponed_date_utc: String
+
+  """
+  Views Amount
+  """
+  views_amount: Int
+
+  """
+  Author
+  """
+  user: User
+
+  """
+  Title highlights
+  """
+  title_highlights: [String]
+
+  """
+  Content highlights
+  """
+  content_highlights: [String]
+
+  """
+  Tags highlights
+  """
+  tags_highlights: [String]
+}
+
+"""
+The `Int` scalar type represents non-fractional signed whole numeric
+values. Int can represent values between -(2^31) and 2^31 - 1. 
+"""
+scalar Int
+
+"""
+The `String` scalar type represents textual data, represented as UTF-8
+character sequences. The String type is most often used by GraphQL to
+represent free-form human-readable text.
+"""
+scalar String
+
+"""
+The `Boolean` scalar type represents `true` or `false`.
+"""
+scalar Boolean
+
+"""
+A type
+"""
+type Tag {
+  """
+  Id
+  """
+  id: Int
+
+  """
+  Tag Value
+  """
+  tag: String
+
+  """
+  Count
+  """
+  count: Int
+}
+
+"""
+A type
+"""
+type Rating {
+  """
+  The auto incremented ID
+  """
+  id: Int
+
+  """
+  Post Id
+  """
+  post_id: Int
+
+  """
+  Rating Value
+  """
+  value: Int
+}
+
+"""
+A type
+"""
+type AuthResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  User
+  """
+  user: User
+
+  """
+  2FA is needed
+  """
+  two_factor_auth_is_needed: Boolean
+}
+
+"""
+A type
+"""
+type User {
+  """
+  Id
+  """
+  id: Int
+
+  """
+  Login
+  """
+  login: String
+
+  """
+  About
+  """
+  about: String
+
+  """
+  Rating
+  """
+  rating: Int
+
+  """
+  Rating Formatted
+  """
+  rating_formatted: String
+
+  """
+  Status
+  """
+  status: Int
+
+  """
+  Banned Until
+  """
+  banned_until: String
+
+  """
+  Ban Reason
+  """
+  ban_reason: String
+
+  """
+  Group
+  """
+  group: Int
+
+  """
+  Avatar
+  """
+  avatar: String
+
+  """
+  Created At
+  """
+  created_at: String
+
+  """
+  Comments Amount
+  """
+  comments_amount: Int
+
+  """
+  Posts Amount
+  """
+  posts_amount: Int
+
+  """
+  My Pluses
+  """
+  my_pluses: Int
+
+  """
+  My Minuses
+  """
+  my_minuses: Int
+
+  """
+  Is Ignored Posts
+  """
+  is_ignored_posts: Boolean
+
+  """
+  Is Ignored Comments
+  """
+  is_ignored_comments: Boolean
+
+  """
+  Is Verified
+  """
+  is_verified: Boolean
+
+  """
+  Is My Subscription
+  """
+  is_my_subscription: Boolean
+
+  """
+  Subscriptions Count
+  """
+  subscriptions_count: Int
+
+  """
+  Subscribers Count
+  """
+  subscribers_count: Int
+
+  """
+  Microdata
+  """
+  microdata: String
+
+  """
+  User Achievements
+  """
+  achievements: [UserAchievement]
+
+  """
+  achievements_progress
+  """
+  achievements_progress: UserAchievementsProgress
+}
+
+"""
+A ban journal entry
+"""
+type UserBan {
+  """
+  Id
+  """
+  id: Int
+
+  """
+  Reason
+  """
+  reason: String
+
+  """
+  Created At
+  """
+  created_at: String
+
+  """
+  Banned Until
+  """
+  banned_until: String
+
+  """
+  Unbanned At
+  """
+  unbanned_at: String
+
+  """
+  Moderator Login
+  """
+  moderator_login: String
+
+  """
+  Unbanned By Login
+  """
+  unbanned_by_login: String
+}
+
+"""
+A device the user was seen on
+"""
+type UserFingerprint {
+  """
+  Id
+  """
+  id: Int
+
+  """
+  Visitor Id
+  """
+  visitor_id: String
+
+  """
+  Confidence
+  """
+  confidence: Float
+
+  """
+  Ip
+  """
+  ip: String
+
+  """
+  First Seen At
+  """
+  first_seen_at: String
+
+  """
+  Last Seen At
+  """
+  last_seen_at: String
+
+  """
+  Other accounts seen on this device
+  """
+  linked_accounts: [UserFingerprintLink]
+}
+
+"""
+The `Float` scalar type represents signed double-precision fractional
+values as specified by
+[IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). 
+"""
+scalar Float
+
+"""
+An account seen on the same device
+"""
+type UserFingerprintLink {
+  """
+  User Id
+  """
+  user_id: Int
+
+  """
+  Login
+  """
+  login: String
+
+  """
+  Status
+  """
+  status: Int
+
+  """
+  Last Seen At
+  """
+  last_seen_at: String
+}
+
+"""
+An account linked by device and/or IP
+"""
+type UserConnection {
+  user_id: Int
+
+  login: String
+
+  status: Int
+
+  shared_ips: Int
+
+  shared_devices: Int
+
+  shared_events: Int
+
+  stable_ips: Int
+
+  burst_ips: Int
+
+  anchored_ips: Int
+
+  pool_ips: Int
+
+  concurrent_ips: Int
+
+  touch_ips: Int
+
+  score: Float
+
+  first_seen_at: String
+
+  last_seen_at: String
+}
+
+"""
+A type
+"""
+type Me {
+  """
+  Id
+  """
+  id: Int
+
+  """
+  Login
+  """
+  login: String
+
+  """
+  About
+  """
+  about: String
+
+  """
+  Rating
+  """
+  rating: Int
+
+  """
+  Rating Formatted
+  """
+  rating_formatted: String
+
+  """
+  Status
+  """
+  status: Int
+
+  """
+  Banned Until
+  """
+  banned_until: String
+
+  """
+  Ban Reason
+  """
+  ban_reason: String
+
+  """
+  Group
+  """
+  group: Int
+
+  """
+  Avatar
+  """
+  avatar: String
+
+  """
+  Created At
+  """
+  created_at: String
+
+  """
+  Comments Amount
+  """
+  comments_amount: Int
+
+  """
+  Posts Amount
+  """
+  posts_amount: Int
+
+  """
+  My Pluses
+  """
+  my_pluses: Int
+
+  """
+  My Minuses
+  """
+  my_minuses: Int
+
+  """
+  Is Ignored Posts
+  """
+  is_ignored_posts: Boolean
+
+  """
+  Is Ignored Comments
+  """
+  is_ignored_comments: Boolean
+
+  """
+  Is Verified
+  """
+  is_verified: Boolean
+
+  """
+  Is My Subscription
+  """
+  is_my_subscription: Boolean
+
+  """
+  Subscriptions Count
+  """
+  subscriptions_count: Int
+
+  """
+  Subscribers Count
+  """
+  subscribers_count: Int
+
+  """
+  Microdata
+  """
+  microdata: String
+
+  """
+  User Achievements
+  """
+  achievements: [UserAchievement]
+
+  """
+  achievements_progress
+  """
+  achievements_progress: UserAchievementsProgress
+
+  """
+  settings
+  """
+  settings: String
+
+  """
+  telegram_user_id
+  """
+  telegram_user_id: String
+
+  """
+  telegram_first_name
+  """
+  telegram_first_name: String
+
+  """
+  new_subscription_posts_count
+  """
+  new_subscription_posts_count: Int
+
+  """
+  email
+  """
+  email: String
+
+  """
+  is_can_change_login
+  """
+  is_can_change_login: Boolean
+}
+
+"""
+A type
+"""
+type Token {
+  """
+  Token Value
+  """
+  token: String
+
+  """
+  Expires At
+  """
+  expires_at: String
+}
+
+"""
+A type
+"""
+type UserCreateResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  Token
+  """
+  token: String
+
+  """
+  Is Captcha Needed
+  """
+  is_captcha_needed: Boolean
+}
+
+"""
+A type
+"""
+type Comment {
+  """
+  ID
+  """
+  id: Int
+
+  """
+  Parent ID
+  """
+  parent_id: Int
+
+  """
+  Post ID
+  """
+  post_id: Int
+
+  """
+  User ID
+  """
+  user_id: Int
+
+  """
+  Почему коммент убран: moderation | author | account_deleted | migration_optout
+  """
+  removal_reason: String
+
+  """
+  Rating
+  """
+  rating: Int
+
+  """
+  Pluses
+  """
+  pluses: Int
+
+  """
+  Minuses
+  """
+  minuses: Int
+
+  """
+  Use Rating Value
+  """
+  user_rating_value: Int
+
+  """
+  Reaction counts as JSON
+  """
+  reactions: String
+
+  """
+  Reaction code left by the current user
+  """
+  my_reaction: Int
+
+  """
+  Content
+  """
+  content: String
+
+  """
+  Status
+  """
+  status: Int
+
+  """
+  Created Date
+  """
+  created_at: String
+
+  """
+  Updated Date
+  """
+  updated_at: String
+
+  """
+  User Name
+  """
+  login: String
+
+  """
+  Media
+  """
+  media: String
+
+  """
+  User Avatar
+  """
+  avatar: String
+
+  """
+  Is my comment
+  """
+  is_mine: Boolean
+
+  """
+  Is Comment Editable
+  """
+  is_editable: Boolean
+
+  """
+  Parent Post Alias
+  """
+  post_alias: String
+
+  """
+  Parent Post Title
+  """
+  post_title: String
+
+  """
+  Is Deleted
+  """
+  is_deleted: Boolean
+
+  """
+  Is User Verified
+  """
+  is_user_verified: Boolean
+
+  """
+  Comment User
+  """
+  user: User
+
+  """
+  Comment Post
+  """
+  post: Post
+
+  """
+  Is Ignoring by current user
+  """
+  is_ignoring: Boolean
+}
+
+"""
+A type
+"""
+type Comments {
+  """
+  ID
+  """
+  list: [Comment]
+
+  """
+  Sorting
+  """
+  sorting: String
+}
+
+"""
+A type
+"""
+type CommentSorting {
+  """
+  ID
+  """
+  id: Int
+
+  """
+  Parent ID
+  """
+  level: Int
+}
+
+"""
+A type
+"""
+type CommentCreateResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Comment Entity
+  """
+  comment: Comment
+
+  """
+  Sorting Structure
+  """
+  sorting: String
+}
+
+"""
+A type
+"""
+type ResetPasswordResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+}
+
+"""
+A type
+"""
+type UserApproveResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  User
+  """
+  user: User
+}
+
+"""
+A type
+"""
+type SendEmailApproveResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+}
+
+"""
+A type
+"""
+type SavePasswordResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  Token
+  """
+  token: String
+
+  """
+  User
+  """
+  user: User
+}
+
+"""
+A type
+"""
+type DefaultResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+}
+
+"""
+Закреплённая ссылка правого сайдбара
+"""
+type PinnedLink {
+  title: String!
+
+  url: String!
+}
+
+"""
+A type
+"""
+type Notification {
+  """
+  Id
+  """
+  id: Int
+
+  """
+  Type
+  """
+  type: Int
+
+  """
+  Text
+  """
+  text: String
+
+  """
+  Is Viewed
+  """
+  is_viewed: Boolean
+
+  """
+  Linked Comment
+  """
+  comment: Comment
+
+  """
+  Linked Comment
+  """
+  parent_comment: Comment
+
+  """
+  Linked Post
+  """
+  post: Post
+
+  """
+  Created At
+  """
+  created_at: String
+}
+
+"""
+A type
+"""
+type NotificationCount {
+  """
+  Type
+  """
+  type: Int
+
+  """
+  Count
+  """
+  count: Int
+}
+
+"""
+A type
+"""
+type Tags {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  Id
+  """
+  tags: [Tag]
+}
+
+"""
+A type
+"""
+type ImportConfirmationCreateResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  Code
+  """
+  code: String
+}
+
+"""
+A type
+"""
+type ImportConfirmationCodeResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  Code
+  """
+  code: String
+
+  """
+  Login
+  """
+  login: String
+
+  """
+  Login
+  """
+  linked_pikabu_login: String
+}
+
+"""
+A type
+"""
+type ImportPostsFetchRequestResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  Request
+  """
+  request: ImportPostsFetchRequest
+}
+
+"""
+A type
+"""
+type ImportPostsFetchRequest {
+  """
+  Status
+  """
+  status: String
+
+  """
+  Created At
+  """
+  created_at: String
+}
+
+"""
+A type
+"""
+type Image {
+  """
+  Url
+  """
+  url: String
+
+  """
+  Image Info
+  """
+  info: [String]
+}
+
+"""
+A type
+"""
+type TagIgnore {
+  """
+  User Id
+  """
+  user_id: Int
+
+  """
+  Tag Id
+  """
+  ignored_tag_id: Int
+
+  """
+  Tag
+  """
+  tag: String
+}
+
+"""
+A type
+"""
+type UserIgnore {
+  """
+  User Id
+  """
+  user_id: Int
+
+  """
+  Tag Id
+  """
+  ignored_user_id: Int
+
+  """
+  Posts
+  """
+  posts: Boolean
+
+  """
+  Comments
+  """
+  comments: Boolean
+
+  """
+  Login
+  """
+  login: String
+
+  """
+  Created At
+  """
+  created_at: String
+}
+
+"""
+A type
+"""
+type PostCreateResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  Post Alias
+  """
+  post_alias: String
+
+  """
+  Post Id
+  """
+  post_id: Int
+}
+
+"""
+A type
+"""
+type TgLinkConfirmationCreateResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  Code
+  """
+  code: String
+}
+
+"""
+A type for user subscriptions
+"""
+type UserSubscription {
+  """
+  User
+  """
+  user: User
+}
+
+"""
+A type
+"""
+type Poll {
+  """
+  ID
+  """
+  id: Int
+
+  """
+  User ID
+  """
+  user_id: Int
+
+  """
+  Title
+  """
+  title: String
+
+  """
+  Is Multiple Choice
+  """
+  is_multiple_choice: Boolean
+
+  """
+  Is Closed
+  """
+  is_closed: Boolean
+
+  """
+  Start Time
+  """
+  start_time_at: String
+
+  """
+  End Time (ISO 8601, UTC)
+  """
+  end_time_at: String
+
+  """
+  Poll Options
+  """
+  options: [PollOption]
+
+  """
+  My Votes
+  """
+  my_votes: [PollVote]
+}
+
+"""
+A type
+"""
+type PollOption {
+  """
+  ID
+  """
+  id: Int
+
+  """
+  Poll ID
+  """
+  poll_id: Int
+
+  """
+  Title
+  """
+  title: String
+
+  """
+  Votes Amount
+  """
+  votes_amount: Int
+}
+
+"""
+A type
+"""
+type PollVote {
+  """
+  Poll Id
+  """
+  poll_id: Int
+
+  """
+  Poll Option Id
+  """
+  poll_option_id: Int
+}
+
+"""
+A type
+"""
+type PostponedPost {
+  """
+  The auto incremented ID
+  """
+  id: Int
+
+  """
+  Post ID
+  """
+  post_id: Int
+
+  """
+  User ID
+  """
+  user_id: Int
+
+  """
+  Destination
+  """
+  destination: String
+
+  """
+  Attempts Amount
+  """
+  attempts_amount: Int
+
+  """
+  Status
+  """
+  status: Int
+
+  """
+  Status Label
+  """
+  status_label: String
+
+  """
+  Result Link
+  """
+  result_link: String
+
+  """
+  Publish Date Utc
+  """
+  publish_date_utc: String
+
+  """
+  Updated At
+  """
+  updated_at: String
+
+  """
+  Last Error Text
+  """
+  last_error_text: String
+
+  """
+  Post Title
+  """
+  post_title: String
+
+  """
+  Post Alias
+  """
+  post_alias: String
+
+  """
+  Post Content
+  """
+  post_content: String
+
+  """
+  Post Content Preview
+  """
+  post_content_preview: String
+}
+
+"""
+A type
+"""
+type UserAchievement {
+  """
+  ID
+  """
+  id: Int
+
+  """
+  Title
+  """
+  title: String
+
+  """
+  Description
+  """
+  description: String
+
+  """
+  Path
+  """
+  path: String
+
+  """
+  History
+  """
+  history: [UserAchievementHistory]
+}
+
+"""
+A type
+"""
+type OAuthResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+}
+
+"""
+A type
+"""
+type TagSubscription {
+  """
+  Id
+  """
+  id: Int
+
+  """
+  User Id
+  """
+  user_id: Int
+
+  """
+  Tag Id
+  """
+  subscribed_tag_id: Int
+
+  """
+  Tag
+  """
+  tag: String
+}
+
+"""
+A type
+"""
+type MyAchievementsChallenge {
+  """
+  User Achievements
+  """
+  achievements_received_in_challenge: [Achievement]
+
+  """
+  User Achievements
+  """
+  achievements_not_received_in_challenge: [Achievement]
+}
+
+"""
+A type
+"""
+type Achievement {
+  """
+  ID
+  """
+  id: Int
+
+  """
+  Title
+  """
+  title: String
+
+  """
+  Description
+  """
+  description: String
+
+  """
+  Path
+  """
+  path: String
+
+  """
+  Is In Challenge
+  """
+  is_in_challenge: Boolean
+
+  """
+  Progress For User
+  """
+  progress_for_user: String
+}
+
+"""
+A type
+"""
+type UserAchievementsProgress {
+  """
+  total
+  """
+  total: Int
+
+  """
+  current
+  """
+  current: Int
+}
+
+"""
+A type
+"""
+type UserAchievementHistory {
+  """
+  Link
+  """
+  link: String
+
+  """
+  Created At
+  """
+  created_at: String
+}
+
+"""
+A game interaction between users
+"""
+type GameInteraction {
+  """
+  The ID of the interaction
+  """
+  id: Int!
+
+  """
+  The ID of the parent interaction
+  """
+  parent_id: Int
+
+  """
+  The ID of the top parent interaction
+  """
+  top_parent_id: Int
+
+  """
+  The user who initiated the interaction
+  """
+  source_user: User
+
+  """
+  The target user of the interaction
+  """
+  target_user: User
+
+  """
+  The tool used in the interaction
+  """
+  tool: GameTool
+
+  """
+  The duration of the tool
+  """
+  tool_duration: Int
+
+  """
+  Whether the interaction was viewed
+  """
+  is_viewed: Boolean
+
+  """
+  Whether the interaction was viewed by the source user
+  """
+  is_viewed_by_source: Boolean
+
+  """
+  Whether the interaction was viewed by the target user
+  """
+  is_viewed_by_target: Boolean
+
+  """
+  The points of the interaction
+  """
+  points: Int
+
+  """
+  The points of the source user
+  """
+  source_user_points: Int
+
+  """
+  The points of the target user
+  """
+  target_user_points: Int
+
+  """
+  The points multiplier of the source user
+  """
+  source_user_points_multiplier: Int
+
+  """
+  The points multiplier of the target user
+  """
+  target_user_points_multiplier: Int
+
+  """
+  The attack power of the interaction
+  """
+  attack_power: Int
+
+  """
+  The attack power before the defense
+  """
+  attack_power_before_defense: Int
+
+  """
+  The defense power of the interaction
+  """
+  defense_power: Int
+
+  """
+  The defense power before the attack
+  """
+  defense_power_before_attack: Int
+
+  """
+  The type of the interaction
+  """
+  type: String!
+
+  """
+  The status of the interaction
+  """
+  status: String!
+
+  """
+  The messages of the interaction
+  """
+  messages: [GameInteractionMessageSet]
+
+  """
+  Metadata of the interaction
+  """
+  metadata: JSON
+
+  """
+  Was the target user active?
+  """
+  is_active_target: Boolean
+
+  """
+  The date the interaction was created
+  """
+  created_at_iso: String!
+
+  """
+  The date the interaction was updated
+  """
+  updated_at_iso: String!
+
+  """
+  List of child interactions
+  """
+  children: [GameInteraction]
+
+  """
+  The parent interaction
+  """
+  parent: GameInteraction
+}
+
+"""
+A tool used in the game
+"""
+type GameTool {
+  """
+  The name of the tool
+  """
+  name: String!
+
+  """
+  Description of the tool
+  """
+  description: String
+
+  """
+  The name of the action
+  """
+  action_name: GameToolActionName
+
+  """
+  The identifier of the tool
+  """
+  identifier: String!
+
+  """
+  The type of the tool (e.g., weapon, shield)
+  """
+  type: String!
+
+  """
+  The maximum number of bonuses the tool can have
+  """
+  max_bonus_count: Int
+
+  """
+  The maximum number of bonuses the tool can have per day
+  """
+  max_bonus_per_day: Int
+
+  """
+  The lifetime of the bonus
+  """
+  bonus_lifetime: Int
+
+  """
+  The number of comments the bonus has
+  """
+  bonus_comments_count: Int
+
+  """
+  The number of posts the bonus has
+  """
+  bonus_posts_count: Int
+
+  """
+  The number of ratings the bonus has
+  """
+  bonus_ratings_count: Int
+
+  """
+  The amount of user rating the bonus has
+  """
+  bonus_user_rating_amount: Float
+
+  """
+  The gap between bonuses
+  """
+  bonus_tool_gap: Int
+
+  """
+  The condition for the bonus
+  """
+  bonus_conditions: String
+
+  """
+  The icon of the tool
+  """
+  icon: String
+
+  """
+  The status of the tool
+  """
+  status: Int
+
+  """
+  The power
+  """
+  power: Int
+
+  """
+  The min level
+  """
+  min_level: Int
+
+  """
+  Is empty target
+  """
+  is_empty_target: Boolean
+
+  """
+  Is self target
+  """
+  is_self_target: Boolean
+}
+
+"""
+A type
+"""
+type GameInteractionResponse {
+  """
+  The status of the interaction
+  """
+  status: String!
+
+  """
+  The interaction
+  """
+  interactions: [GameInteraction]
+
+  """
+  The message
+  """
+  message: String
+
+  """
+  The current interaction
+  """
+  current_interaction: GameInteraction
+}
+
+"""
+A type
+"""
+type GameUserInventoryTool {
+  """
+  The tool
+  """
+  tool: GameTool
+
+  """
+  The base count
+  """
+  base_count: Int
+
+  """
+  The base used count
+  """
+  base_used_count: Int
+
+  """
+  The bonus count
+  """
+  bonus_count: Int
+
+  """
+  The bonus used count
+  """
+  bonus_used_count: Int
+
+  """
+  The total available
+  """
+  total_available_count: Int
+}
+
+"""
+A type
+"""
+type GameState {
+  """
+  The tools
+  """
+  tools: GameUserInventoryTools
+
+  """
+  The applied buffs
+  """
+  applied_buffs: [GameAppliedBuff]
+
+  """
+  The score
+  """
+  score: GameScore
+
+  """
+  The score of the day
+  """
+  score_day: GameScore
+
+  """
+  The pending interactions
+  """
+  pending_interactions: [GameInteraction]
+
+  """
+  The number of notifications
+  """
+  notifications_count: Int
+}
+
+"""
+A game interaction messages
+"""
+type GameInteractionMessage {
+  """
+  The message
+  """
+  message: String
+
+  """
+  The pronoun
+  """
+  pronoun: String
+}
+
+"""
+A game interaction messages
+"""
+type GameInteractionMessageSet {
+  """
+  Your tool action message
+  """
+  you: [GameInteractionMessage]
+
+  """
+  Opponent tool action message
+  """
+  male: [GameInteractionMessage]
+
+  """
+  Default message
+  """
+  default: [GameInteractionMessage]
+}
+
+"""
+A type
+"""
+type GameScore {
+  """
+  The number of attacks
+  """
+  attacks: Int
+
+  """
+  The number of attacks on me
+  """
+  attacks_on_me: Int
+
+  """
+  The number of hits
+  """
+  hits: Int
+
+  """
+  The number of hits on me
+  """
+  hits_on_me: Int
+
+  """
+  The number of defenses
+  """
+  defenses: Int
+
+  """
+  The number of points
+  """
+  points: Int
+
+  """
+  The level
+  """
+  level: Int
+
+  """
+  The current level points
+  """
+  current_level_points: Int
+
+  """
+  The next level points
+  """
+  points_to_next_level: Int
+}
+
+"""
+A type
+"""
+type GameProgress {
+  """
+  The level
+  """
+  level: Int
+
+  """
+  The points
+  """
+  points: Int
+
+  """
+  The current level points
+  """
+  current_level_points: Int
+
+  """
+  The points to next level
+  """
+  points_to_next_level: Int
+}
+
+"""
+A type
+"""
+type GameUserAttackPossibility {
+  """
+  Can attack
+  """
+  can_attack: Boolean
+
+  """
+  Time to attack
+  """
+  time_to_attack: Int
+
+  """
+  Attack tool
+  """
+  attack_tools: [GameUserInventoryTool]
+}
+
+"""
+A tool action name
+"""
+type GameToolActionName {
+  """
+  The name of the action
+  """
+  use: String
+
+  """
+  The destination of the action
+  """
+  destination: String
+}
+
+"""
+A type
+"""
+type GameUserInventoryTools {
+  """
+  The attack tool
+  """
+  attack: [GameUserInventoryTool]
+
+  """
+  The defense tool
+  """
+  defense: [GameUserInventoryTool]
+
+  """
+  The defense tool
+  """
+  buff: [GameUserInventoryTool]
+}
+
+"""
+A type
+"""
+type ImportedPostActionResponse {
+  """
+  Status
+  """
+  response_status: String
+
+  """
+  Error Message
+  """
+  error_message: String
+
+  """
+  Success Message
+  """
+  success_message: String
+
+  """
+  Post Alias
+  """
+  post_alias: String
+
+  """
+  Post Id
+  """
+  post_id: Int
+}
+
+"""
+The actions that can be performed on a post
+"""
+enum PostActionEnum {
+  """
+  Delete post
+  """
+  DELETE
+
+  """
+  Republish post
+  """
+  REPUBLISH
+
+  """
+  Hide post
+  """
+  HIDE
+}
+
+"""
+A type
+"""
+type GameAppliedBuff {
+  """
+  ID of the buff
+  """
+  id: Int!
+
+  """
+  ID of the user who applied the buff
+  """
+  from_user_id: Int!
+
+  """
+  ID of the user who the buff was applied to
+  """
+  to_user_id: Int!
+
+  """
+  ID of the tool that was applied
+  """
+  game_tool_id: Int!
+
+  """
+  Date and time when the buff was applied
+  """
+  activated_at: DateTime
+
+  """
+  Date and time when the buff expires
+  """
+  expires_at: DateTime
+
+  """
+  Status of the buff
+  """
+  status: GameAppliedBuffStatus!
+
+  """
+  Buff power
+  """
+  power: Int!
+
+  """
+  Buff power used
+  """
+  power_used: Int!
+
+  """
+  Sort ordering
+  """
+  sort_ordering: Int!
+
+  """
+  The tool
+  """
+  tool: GameTool
+}
+
+""""""
+scalar DateTime
+
+"""
+The `JSON` scalar type represents JSON values as specified by ECMA-404.
+"""
+scalar JSON
+
+"""
+Game applied buff status
+"""
+enum GameAppliedBuffStatus {
+  """
+  Active buff
+  """
+  ACTIVE
+
+  """
+  Expired buff
+  """
+  EXPIRED
+
+  """
+  Destroyed buff
+  """
+  DESTROYED
+}
+
+"""
+A type
+"""
+type GameRatingScore {
+  """
+  The rank of the score
+  """
+  rank: Int!
+
+  """
+  The rank value
+  """
+  rank_value: Int!
+
+  """
+  The level
+  """
+  level: Int!
+
+  """
+  The user
+  """
+  user: User
+}
+
+"""
+Post draft
+"""
+type PostDraft {
+  """
+  Draft ID
+  """
+  id: Int
+
+  """
+  Draft title
+  """
+  title: String
+
+  """
+  TipTap JSON content
+  """
+  content: String
+
+  """
+  Plain text excerpt for list display
+  """
+  content_preview: String
+
+  """
+  Tag values
+  """
+  tags: [String]
+
+  """
+  Original content flag
+  """
+  is_own: Boolean
+
+  """
+  NSFW flag
+  """
+  is_nsfw: Boolean
+
+  """
+  Cruel content flag
+  """
+  is_cruel: Boolean
+
+  """
+  Political content flag
+  """
+  is_politics: Boolean
+
+  """
+  Postponed flag
+  """
+  is_postponed: Boolean
+
+  """
+  Scheduled publish datetime
+  """
+  postponed_date: String
+
+  """
+  Post this draft answers to
+  """
+  parent_post_id: Int
+
+  """
+  Comment this draft answers to
+  """
+  parent_comment_id: Int
+
+  """
+  Last updated at
+  """
+  updated_at: String
+
+  """
+  Created at
+  """
+  created_at: String
+}
+
+"""
+Серия постов
+"""
+type Series {
+  id: Int
+
+  user_id: Int
+
+  title: String
+
+  alias: String
+
+  description: String
+
+  cover: String
+
+  posts_amount: Int
+
+  subscribers_amount: Int
+
+  status: Int
+
+  created_at: String
+
+  user: User
+
+  posts: [Post]
+
+  is_subscribed: Boolean
+
+  is_manageable: Boolean
+}
+
+"""
+Результат операции с серией
+"""
+type SeriesResponse {
+  response_status: String
+
+  error_message: String
+
+  series: Series
+}
+
+"""
+Метка последнего просмотра треда комментариев до её обновления
+"""
+type CommentsSeen {
+  previous_seen_at: String
+
+  previous_comments_amount: Int
+}
+
+"""
+Число новых комментариев поста с момента последнего просмотра треда
+"""
+type NewCommentsCount {
+  post_id: Int!
+
+  new_count: Int!
+}
+
+type PostPagination {
+  """
+  List of items on the current page
+  """
+  data: [Post!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type NotificationPagination {
+  """
+  List of items on the current page
+  """
+  data: [Notification!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type TagIgnorePagination {
+  """
+  List of items on the current page
+  """
+  data: [TagIgnore!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type UserIgnorePagination {
+  """
+  List of items on the current page
+  """
+  data: [UserIgnore!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type CommentPagination {
+  """
+  List of items on the current page
+  """
+  data: [Comment!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type PostponedPostPagination {
+  """
+  List of items on the current page
+  """
+  data: [PostponedPost!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type TagSubscriptionPagination {
+  """
+  List of items on the current page
+  """
+  data: [TagSubscription!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type GameInteractionPagination {
+  """
+  List of items on the current page
+  """
+  data: [GameInteraction!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type UserPagination {
+  """
+  List of items on the current page
+  """
+  data: [User!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type TagPagination {
+  """
+  List of items on the current page
+  """
+  data: [Tag!]!
+
+  """
+  Number of total items selected by the query
+  """
+  total: Int!
+
+  """
+  Number of items returned per page
+  """
+  per_page: Int!
+
+  """
+  Current page of the cursor
+  """
+  current_page: Int!
+
+  """
+  Number of the first item returned
+  """
+  from: Int
+
+  """
+  Number of the last item returned
+  """
+  to: Int
+
+  """
+  The last page (number of pages)
+  """
+  last_page: Int!
+
+  """
+  Determines if cursor has more pages after the current page
+  """
+  has_more_pages: Boolean!
+}
+
+type Query {
+  """
+  A query to get Posts List
+  """
+  posts(page: Int, period: String, type: String, user_id: Int, tag: String, search_keyword: String, is_own: Boolean, is_mine: Boolean, pagination_key: String, is_show_viewed: Boolean, status: Int, is_imported: Boolean, similar_to_id: Int): PostPagination
+
+  """
+  A query to get Single Post
+  """
+  post(id: Int): Post
+
+  """
+  A query
+  """
+  tags(tag_part: String!): [Tag]
+
+  """
+  A query
+  """
+  rating(type: String!, ids: [Int]!): [Rating]
+
+  """
+  A query
+  """
+  comments(post_id: Int): Comments
+
+  """
+  A query
+  """
+  me: Me
+
+  """
+  A query
+  """
+  user(login: String!): User
+
+  """
+  Ban history of a user (moderators only)
+  """
+  userBans(user_id: Int!): [UserBan]
+
+  """
+  One-time nonce if a device fingerprint should be collected now
+  """
+  fingerprintChallenge: String
+
+  """
+  Devices of a user and accounts linked by them (moderators only)
+  """
+  userFingerprints(user_id: Int!): [UserFingerprint]
+
+  """
+  Accounts linked by device and/or IP (moderators only)
+  """
+  userConnections(user_id: Int!): [UserConnection]
+
+  """
+  A query
+  """
+  users(keyword: String): [User]
+
+  """
+  A query
+  """
+  notifications(type: Int, page: Int, is_show_viewed: Boolean): NotificationPagination
+
+  """
+  A query
+  """
+  notificationsCount(type: Int): [NotificationCount]
+
+  """
+  A query
+  """
+  importPossibility(login: String!): DefaultResponse
+
+  """
+  A query
+  """
+  importConfirmationCode: ImportConfirmationCodeResponse
+
+  """
+  A query
+  """
+  importPostsFetchRequest: ImportPostsFetchRequestResponse
+
+  """
+  A query
+  """
+  tagIgnore(page: Int, tag_name: String): TagIgnorePagination
+
+  """
+  A query
+  """
+  userIgnore(page: Int): UserIgnorePagination
+
+  """
+  A query
+  """
+  addPostPreflight: DefaultResponse
+
+  """
+  A query
+  """
+  myComments(page: Int, user_id: Int): CommentPagination
+
+  """
+  A query that retrieves posts list from cache
+  """
+  postsWithCache(page: Int, period: String, type: String, user_id: Int, tag: String, search_keyword: String, is_own: Boolean, is_mine: Boolean, pagination_key: String, is_show_viewed: Boolean, status: Int, is_imported: Boolean, similar_to_id: Int): PostPagination
+
+  """
+  A query that retrieves single post from cache
+  """
+  postWithCache(id: Int): Post
+
+  """
+  A query that retrieves subscription list for user
+  """
+  userSubscriptions: [User]
+
+  """
+  A query that retrieves list of users that subscribed to me
+  """
+  usersSubscribedToMe: [User]
+
+  """
+  A query that retrieves subscribed posts count for badge
+  """
+  userHasSubscribedPosts: Int
+
+  """
+  A query
+  """
+  topComments("top (по рейтингу, по умолчанию) или random (случайные из тех же кандидатов)" mode: String): [Comment]
+
+  """
+  A query
+  """
+  mostDiscussedPosts: [Post]
+
+  """
+  A query
+  """
+  poll(id: Int): Poll
+
+  """
+  A query
+  """
+  postponedPosts(page: Int, destination: String, status: String): PostponedPostPagination
+
+  """
+  Батч «сколько новых комментариев» по списку постов для текущего юзера
+  """
+  newCommentsCounts(post_ids: [Int]!): [NewCommentsCount]
+
+  """
+  A query
+  """
+  allComments(page: Int): CommentPagination
+
+  """
+  A query that retrieves tag subscription list for user
+  """
+  tagSubscriptions(page: Int, tag_name: String): TagSubscriptionPagination
+
+  """
+  A query
+  """
+  myAchievementsChallenge: MyAchievementsChallenge
+
+  """
+  A query
+  """
+  gameInteractions(page: Int, status: String, type: String, source_is_me: Boolean, target_is_me: Boolean, is_new: Boolean, top_level_only: Boolean): GameInteractionPagination
+
+  """
+  A query
+  """
+  gameAttackTools: [GameUserInventoryTool]
+
+  """
+  A query
+  """
+  gameDefenseTools: [GameUserInventoryTool]
+
+  """
+  A query
+  """
+  gameState(user_id: Int): GameState
+
+  """
+  A query
+  """
+  gameUserAttackTools("The ID of the target user" target_user_id: Int!): GameUserAttackPossibility
+
+  """
+  A query
+  """
+  gameTools: GameUserInventoryTools
+
+  """
+  A query
+  """
+  gameRating("The period of the rating" period: String, "The type of the rating" rating_type: String): [GameRatingScore]
+
+  """
+  A query
+  """
+  usersSearch(keyword: String, page: Int = 1, per_page: Int = 20): UserPagination
+
+  """
+  A query
+  """
+  tagsSearch(keyword: String, page: Int = 1, per_page: Int = 20): TagPagination
+
+  """
+  List of current user post drafts
+  """
+  postDrafts: [PostDraft]
+
+  """
+  Серия по id или alias
+  """
+  series(id: Int, alias: String): Series
+
+  """
+  Серии автора или каталог серий
+  """
+  seriesList(user_id: Int, mine: Boolean, subscribed: Boolean, query: String, sort: String, limit: Int, page: Int): [Series]
+
+  """
+  Свои посты для добавления в серию
+  """
+  seriesCandidates(query: String, limit: Int, series_id: Int): [Post]
+
+  """
+  Случайная серия для виджета в сайдбаре
+  """
+  randomSeries(exclude_id: Int): Series
+
+  """
+  Закреплённые ссылки правого сайдбара
+  """
+  pinnedLinks: [PinnedLink]
+
+  """
+  Get a single post draft by ID
+  """
+  postDraft("Draft ID" id: Int!): PostDraft
+}
+
+type Mutation {
+  """
+  Rating Mutation
+  """
+  Rating(id: String!, type: String!, action: String!): String
+
+  """
+  Reaction Mutation
+  """
+  Reaction(id: Int!, type: String!, reaction: Int): String
+
+  """
+  Auth Token Mutation
+  """
+  auth(login: String!, password: String!, two_factor_auth_code: String): AuthResponse
+
+  """
+  User Mutation
+  """
+  user(login: String!, email: String!, password: String!, captcha_token: String): UserCreateResponse
+
+  """
+  Comment mutation
+  """
+  comment(comment_id: Int, post_id: Int, parent_id: Int, content: String, media: String, delete: Boolean): CommentCreateResponse
+
+  """
+  A mutation
+  """
+  post(id: Int, title: String!, content: String!, tags: [String], is_own: Boolean, is_nsfw: Boolean, is_cruel: Boolean, is_politics: Boolean, is_postponed: Boolean, postponed_date: String, is_embed_download: Boolean, parent_post_id: Int, parent_comment_id: Int, series_id: Int): PostCreateResponse
+
+  """
+  A mutation
+  """
+  resetPassword(email: String!): ResetPasswordResponse
+
+  """
+  A mutation
+  """
+  userApprove(code: String!): UserApproveResponse
+
+  """
+  A mutation
+  """
+  sendEmailApprove: SendEmailApproveResponse
+
+  """
+  A mutation
+  """
+  savePassword(password: String!, code: String!): SavePasswordResponse
+
+  """
+  A mutation
+  """
+  settings(password: String, password_new: String, avatar_value: String, about: String, login: String, settings: String): DefaultResponse
+
+  """
+  A mutation
+  """
+  tagIgnore(tag_id: Int, tag_name: String, action: Int!): DefaultResponse
+
+  """
+  A mutation
+  """
+  userIgnore(user_id: Int!, action: Int!, type: String!): DefaultResponse
+
+  """
+  A mutation
+  """
+  notification(ids: [Int], all_by_type: Int): DefaultResponse
+
+  """
+  A mutation
+  """
+  importConfirmationCreate(login: String!): ImportConfirmationCreateResponse
+
+  """
+  A mutation
+  """
+  importConfirmationCheck: DefaultResponse
+
+  """
+  A mutation
+  """
+  importPostsFetchRequest: ImportPostsFetchRequestResponse
+
+  """
+  A mutation
+  """
+  logout: DefaultResponse
+
+  """
+  A mutation
+  """
+  tgLink(action: Int): TgLinkConfirmationCreateResponse
+
+  """
+  A mutation
+  """
+  commentMutationExtended(comment_id: Int, action: String): DefaultResponse
+
+  """
+  A mutation
+  """
+  postMutationExtended(post_id: Int, action: String): DefaultResponse
+
+  """
+  A mutation
+  """
+  userMutationExtended(user_id: Int, action: String): DefaultResponse
+
+  """
+  Ban a user with a reason and optional expiration
+  """
+  userBan(user_id: Int!, duration_minutes: Int, reason: String!): DefaultResponse
+
+  """
+  Submit a Fingerprint requestId issued for a challenge
+  """
+  fingerprintSubmit(nonce: String!, request_id: String, failure: String): DefaultResponse
+
+  """
+  A mutation that add/updates subscription to user
+  """
+  userSubscription(user_id_to: Int, action: Int): DefaultResponse
+
+  """
+  A mutation that sets user`s last_viewed_at field
+  """
+  setUserViewedSubsList: DefaultResponse
+
+  """
+  A mutation
+  """
+  postFavorite(post_id: Int!, action: Int): DefaultResponse
+
+  """
+  A mutation
+  """
+  pollVote(poll_id: Int, poll_option_ids: [Int]): Poll
+
+  """
+  Create or update a poll, returns poll_id
+  """
+  pollSave(id: Int, title: String!, options: [String]!, is_multiple_choice: Boolean, end_time_at: String): Int
+
+  """
+  Set is_closed flag on a poll owned by the current user
+  """
+  pollClose(poll_id: Int!, is_closed: Boolean!): Boolean
+
+  """
+  A mutation
+  """
+  postView(ids: [Int]): Boolean
+
+  """
+  A mutation
+  """
+  userSettings(settings: String): Boolean
+
+  """
+  A mutation
+  """
+  postDelete(post_id: Int): DefaultResponse
+
+  """
+  A mutation
+  """
+  postponedPostDelete(id: Int): DefaultResponse
+
+  """
+  A mutation
+  """
+  oAuth(provider: String, params: String): OAuthResponse
+
+  """
+  A mutation
+  """
+  tagSubscription(tag_id: Int, tag_name: String, action: Int): DefaultResponse
+
+  """
+  A mutation
+  """
+  useGameAttackTool("The ID of the target user" target_user_id: Int!, "The identifier of the tool being thrown" tool_identifier: String!, "The ID of the parent interaction" parent_interaction_id: Int): GameInteractionResponse
+
+  """
+  A mutation
+  """
+  useGameDefenseTool("The ID of the parent interaction" parent_interaction_id: Int, "The identifier of the tool being used" tool_identifier: String!): GameInteractionResponse
+
+  """
+  A mutation
+  """
+  makeInteractionsViewed(interaction_ids: [Int]): Boolean
+
+  """
+  A mutation
+  """
+  importedPost(post_id: Int, action: PostActionEnum): ImportedPostActionResponse
+
+  """
+  A mutation
+  """
+  useGameBuffTool("The identifier of the tool being thrown" tool_identifier: String!): GameInteractionResponse
+
+  """
+  A mutation
+  """
+  useTool("The identifier of the tool being thrown" tool_identifier: String!, "The ID of the target user" target_user_id: Int, "The ID of the parent interaction" parent_interaction_id: Int): GameInteractionResponse
+
+  """
+  Create or update a post draft
+  """
+  postDraft("Draft ID (null = create new)" id: Int, "Draft title" title: String, "TipTap JSON content" content: String, "Tag values" tags: [String], is_own: Boolean, is_nsfw: Boolean, is_cruel: Boolean, is_politics: Boolean, is_postponed: Boolean, postponed_date: String, "Post this draft answers to" parent_post_id: Int, "Comment this draft answers to" parent_comment_id: Int): PostDraft
+
+  """
+  Создать или отредактировать серию постов
+  """
+  seriesSave(id: Int, title: String!, description: String, cover: String): SeriesResponse
+
+  """
+  Управление составом и порядком серии
+  """
+  seriesPost(action: String!, series_id: Int, post_id: Int, post_ids: [Int]): DefaultResponse
+
+  """
+  Подписка на серию: 1 — подписаться, 0 — отписаться
+  """
+  seriesSubscription(series_id: Int!, action: Int!): DefaultResponse
+
+  """
+  Полная замена закреплённых ссылок сайдбара (модераторы)
+  """
+  pinnedLinksSave(links: JSON): DefaultResponse
+
+  """
+  Отмечает тред комментариев поста просмотренным, возвращает прежнюю метку
+  """
+  markCommentsSeen(post_id: Int!): CommentsSeen
+
+  """
+  Delete a post draft
+  """
+  postDraftDelete("Draft ID" id: Int!): DefaultResponse
+}
+
+"""
+A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.
+"""
+type __Schema {
+  """
+  A list of all types supported by this server.
+  """
+  types: [__Type!]!
+
+  """
+  The type that query operations will be rooted at.
+  """
+  queryType: __Type!
+
+  """
+  If this server supports mutation, the type that mutation operations will be rooted at.
+  """
+  mutationType: __Type
+
+  """
+  If this server support subscription, the type that subscription operations will be rooted at.
+  """
+  subscriptionType: __Type
+
+  """
+  A list of all directives supported by this server.
+  """
+  directives: [__Directive!]!
+}
+
+"""
+The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+
+Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+"""
+type __Type {
+  kind: __TypeKind!
+
+  name: String
+
+  description: String
+
+  fields(includeDeprecated: Boolean = false): [__Field!]
+
+  interfaces: [__Type!]
+
+  possibleTypes: [__Type!]
+
+  enumValues(includeDeprecated: Boolean = false): [__EnumValue!]
+
+  inputFields(includeDeprecated: Boolean = false): [__InputValue!]
+
+  ofType: __Type
+}
+
+"""
+An enum describing what kind of type a given `__Type` is.
+"""
+enum __TypeKind {
+  """
+  Indicates this type is a scalar.
+  """
+  SCALAR
+
+  """
+  Indicates this type is an object. `fields` and `interfaces` are valid fields.
+  """
+  OBJECT
+
+  """
+  Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields.
+  """
+  INTERFACE
+
+  """
+  Indicates this type is a union. `possibleTypes` is a valid field.
+  """
+  UNION
+
+  """
+  Indicates this type is an enum. `enumValues` is a valid field.
+  """
+  ENUM
+
+  """
+  Indicates this type is an input object. `inputFields` is a valid field.
+  """
+  INPUT_OBJECT
+
+  """
+  Indicates this type is a list. `ofType` is a valid field.
+  """
+  LIST
+
+  """
+  Indicates this type is a non-null. `ofType` is a valid field.
+  """
+  NON_NULL
+}
+
+"""
+Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type.
+"""
+type __Field {
+  name: String!
+
+  description: String
+
+  args(includeDeprecated: Boolean = false): [__InputValue!]!
+
+  type: __Type!
+
+  isDeprecated: Boolean!
+
+  deprecationReason: String
+}
+
+"""
+Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value.
+"""
+type __InputValue {
+  name: String!
+
+  description: String
+
+  type: __Type!
+
+  """
+  A GraphQL-formatted string representing the default value for this input value.
+  """
+  defaultValue: String
+
+  isDeprecated: Boolean!
+
+  deprecationReason: String
+}
+
+"""
+One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string.
+"""
+type __EnumValue {
+  name: String!
+
+  description: String
+
+  isDeprecated: Boolean!
+
+  deprecationReason: String
+}
+
+"""
+A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.
+
+In some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.
+"""
+type __Directive {
+  name: String!
+
+  description: String
+
+  isRepeatable: Boolean!
+
+  locations: [__DirectiveLocation!]!
+
+  args: [__InputValue!]!
+}
+
+"""
+A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.
+"""
+enum __DirectiveLocation {
+  """
+  Location adjacent to a query operation.
+  """
+  QUERY
+
+  """
+  Location adjacent to a mutation operation.
+  """
+  MUTATION
+
+  """
+  Location adjacent to a subscription operation.
+  """
+  SUBSCRIPTION
+
+  """
+  Location adjacent to a field.
+  """
+  FIELD
+
+  """
+  Location adjacent to a fragment definition.
+  """
+  FRAGMENT_DEFINITION
+
+  """
+  Location adjacent to a fragment spread.
+  """
+  FRAGMENT_SPREAD
+
+  """
+  Location adjacent to an inline fragment.
+  """
+  INLINE_FRAGMENT
+
+  """
+  Location adjacent to a variable definition.
+  """
+  VARIABLE_DEFINITION
+
+  """
+  Location adjacent to a schema definition.
+  """
+  SCHEMA
+
+  """
+  Location adjacent to a scalar definition.
+  """
+  SCALAR
+
+  """
+  Location adjacent to an object type definition.
+  """
+  OBJECT
+
+  """
+  Location adjacent to a field definition.
+  """
+  FIELD_DEFINITION
+
+  """
+  Location adjacent to an argument definition.
+  """
+  ARGUMENT_DEFINITION
+
+  """
+  Location adjacent to an interface definition.
+  """
+  INTERFACE
+
+  """
+  Location adjacent to a union definition.
+  """
+  UNION
+
+  """
+  Location adjacent to an enum definition.
+  """
+  ENUM
+
+  """
+  Location adjacent to an enum value definition.
+  """
+  ENUM_VALUE
+
+  """
+  Location adjacent to an input object type definition.
+  """
+  INPUT_OBJECT
+
+  """
+  Location adjacent to an input object field definition.
+  """
+  INPUT_FIELD_DEFINITION
+}
+
+"""
+Directs the executor to include this field or fragment only when the `if` argument is true.
+"""
+directive @include("Included when true." if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"""
+Directs the executor to skip this field or fragment when the `if` argument is true.
+"""
+directive @skip("Skipped when true." if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"""
+Marks an element of a GraphQL schema as no longer supported.
+"""
+directive @deprecated("Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax, as specified by [CommonMark](https://commonmark.org/)." reason: String = "No longer supported") on FIELD_DEFINITION | ENUM_VALUE | ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+

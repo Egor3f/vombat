@@ -1,0 +1,22 @@
+query BattleState {
+  gameState {
+    notifications_count
+    tools {
+      attack {
+        total_available_count
+        tool {
+          identifier
+        }
+      }
+    }
+  }
+}
+
+mutation UseTool($tool: String!, $targetUserId: Int) {
+  useTool(tool_identifier: $tool, target_user_id: $targetUserId) {
+    message
+    interactions {
+      id
+    }
+  }
+}

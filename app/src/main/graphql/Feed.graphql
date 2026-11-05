@@ -1,0 +1,35 @@
+query Feed($page: Int, $type: String, $period: String, $tag: String, $userId: Int, $keyword: String) {
+  posts(page: $page, type: $type, period: $period, tag: $tag, user_id: $userId, search_keyword: $keyword) {
+    has_more_pages
+    data {
+      ...PostFields
+    }
+  }
+}
+
+fragment PostFields on Post {
+  id
+  alias
+  title
+  login
+  avatar
+  rating
+  user_rating_value
+  reactions_serialized
+  my_reaction
+  is_in_favorites
+  in_favorites_amount
+  comments_amount
+  created_at
+  content
+  is_nsfw
+  is_cruel
+  is_politics
+  is_postponed
+  postponed_date_utc
+  is_sensitive_content_hidden
+  is_blur_sensitive_content
+  tags {
+    tag
+  }
+}

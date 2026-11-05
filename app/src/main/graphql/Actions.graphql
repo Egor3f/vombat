@@ -1,0 +1,28 @@
+mutation Vote($id: String!, $type: String!, $action: String!) {
+  Rating(id: $id, type: $type, action: $action)
+}
+
+mutation React($id: Int!, $type: String!, $reaction: Int) {
+  Reaction(id: $id, type: $type, reaction: $reaction)
+}
+
+mutation Favorite($postId: Int!, $action: Int) {
+  postFavorite(post_id: $postId, action: $action) {
+    response_status
+    error_message
+  }
+}
+
+mutation SendComment($commentId: Int, $postId: Int, $parentId: Int, $content: String, $media: String) {
+  comment(comment_id: $commentId, post_id: $postId, parent_id: $parentId, content: $content, media: $media) {
+    response_status
+    error_message
+  }
+}
+
+mutation DeleteComment($commentId: Int, $postId: Int) {
+  comment(comment_id: $commentId, post_id: $postId, delete: true) {
+    response_status
+    error_message
+  }
+}

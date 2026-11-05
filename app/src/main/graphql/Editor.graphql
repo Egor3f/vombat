@@ -1,0 +1,42 @@
+query AddPostPreflight {
+  addPostPreflight {
+    response_status
+    error_message
+  }
+}
+
+query TagSuggestions($part: String!) {
+  tags(tag_part: $part) {
+    tag
+    count
+  }
+}
+
+mutation PublishPost(
+  $title: String!
+  $content: String!
+  $tags: [String]!
+  $isOwn: Boolean
+  $isNsfw: Boolean
+  $isCruel: Boolean
+  $isPolitics: Boolean
+  $isPostponed: Boolean
+  $postponedDate: String
+) {
+  post(
+    title: $title
+    content: $content
+    tags: $tags
+    is_own: $isOwn
+    is_nsfw: $isNsfw
+    is_cruel: $isCruel
+    is_politics: $isPolitics
+    is_postponed: $isPostponed
+    postponed_date: $postponedDate
+    is_embed_download: false
+  ) {
+    response_status
+    error_message
+    post_id
+  }
+}

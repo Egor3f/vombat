@@ -1,0 +1,138 @@
+query Profile($login: String!) {
+  user(login: $login) {
+    id
+    login
+    about
+    rating_formatted
+    avatar
+    posts_amount
+    comments_amount
+    subscribers_count
+    subscriptions_count
+    is_my_subscription
+  }
+}
+
+mutation Subscribe($userId: Int!, $action: Int!) {
+  userSubscription(user_id_to: $userId, action: $action) {
+    response_status
+    error_message
+  }
+}
+
+query SearchUsers($keyword: String) {
+  usersSearch(keyword: $keyword, page: 1, per_page: 30) {
+    data {
+      id
+      login
+      avatar
+      rating_formatted
+    }
+  }
+}
+
+query SearchTags($keyword: String) {
+  tagsSearch(keyword: $keyword, page: 1, per_page: 30) {
+    data {
+      id
+      tag
+      count
+    }
+  }
+}
+
+query Notifications($page: Int) {
+  notifications(page: $page, type: -1, is_show_viewed: true) {
+    has_more_pages
+    data {
+      id
+      text
+      is_viewed
+      created_at
+      comment {
+        id
+        post_id
+        content
+        login
+        user {
+          login
+        }
+      }
+      post {
+        id
+        title
+      }
+    }
+  }
+}
+
+query NotificationsCount {
+  notificationsCount {
+    count
+  }
+}
+
+mutation MarkNotifications($ids: [Int], $allByType: Int) {
+  notification(ids: $ids, all_by_type: $allByType) {
+    response_status
+  }
+}
+
+mutation TagSubscribe($tagName: String, $action: Int) {
+  tagSubscription(tag_name: $tagName, action: $action) {
+    response_status
+    error_message
+  }
+}
+
+mutation TagIgnoreAction($tagName: String, $action: Int!) {
+  tagIgnore(tag_name: $tagName, action: $action) {
+    response_status
+    error_message
+  }
+}
+
+mutation UserIgnoreAction($userId: Int!, $action: Int!, $type: String!) {
+  userIgnore(user_id: $userId, action: $action, type: $type) {
+    response_status
+    error_message
+  }
+}
+
+query TagState($tag: String) {
+  tagSubscriptions(tag_name: $tag) {
+    data {
+      tag
+    }
+  }
+  tagIgnore(tag_name: $tag) {
+    data {
+      tag
+    }
+  }
+}
+
+query IgnoredUsers($page: Int) {
+  userIgnore(page: $page) {
+    has_more_pages
+    data {
+      ignored_user_id
+      login
+      posts
+      comments
+    }
+  }
+}
+
+query IgnoredTags($page: Int) {
+  tagIgnore(page: $page) {
+    has_more_pages
+    data {
+      tag
+    }
+  }
+}
+
+mutation MarkViewed($ids: [Int]) {
+  postView(ids: $ids)
+}
