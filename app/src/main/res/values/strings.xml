@@ -126,7 +126,11 @@
     <string name="settings_bugs">Жуки</string>
     <string name="settings_bugs_hint">Иконка ВомБаттла на панели и кнопка «Кинуть жука» в профиле</string>
     <string name="settings_attack_alerts">Уведомлять о жуках в фоне</string>
-    <string name="settings_attack_alerts_hint">Оповещения только о прилётах жуков, пропадают через 10 минут. Звук можно сменить или выключить в настройках приложения. Там же советую отключить экономию батареи</string>
+    <string name="settings_attack_alerts_hint">Оповещения только о прилётах жуков, пропадают через 10 минут</string>
+    <string name="attack_sound_settings">Настроить звук</string>
+    <string name="battery_unrestrict">Отключить экономию батареи</string>
+    <string name="battery_unrestricted">Экономия батареи отключена</string>
+    <string name="battery_unrestrict_hint">Необязательно. Повышает стабильность уведомлений, тратит больше энергии</string>
     <string name="notifications_denied">Нет разрешения на уведомления. Его можно выдать в настройках приложения</string>
     <string name="attack_channel">Прилёты жуков</string>
     <string name="attack_fallback">%1$s: %2$s применён против вас</string>

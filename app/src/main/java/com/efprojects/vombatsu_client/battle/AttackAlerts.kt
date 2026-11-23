@@ -1,6 +1,7 @@
 package com.efprojects.vombatsu_client.battle
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,7 +12,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.os.Build
+import android.os.PowerManager
 import android.os.SystemClock
+import android.provider.Settings
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -66,6 +69,17 @@ class AttackAlerts(
     }
 
     fun scheduleNext() = schedule(POLL_INTERVAL_MS)
+
+    val batteryUnrestricted
+        get() = context.getSystemService(PowerManager::class.java).isIgnoringBatteryOptimizations(context.packageName)
+
+    fun soundSettingsIntent(): Intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
+        .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+        .putExtra(Settings.EXTRA_CHANNEL_ID, CHANNEL_ID)
+
+    @SuppressLint("BatteryLife")
+    fun batteryUnrestrictIntent(): Intent =
+        Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS, "package:${context.packageName}".toUri())
 
     suspend fun check() {
         val data = apollo.query(IncomingAttacksQuery()).execute().data ?: return
