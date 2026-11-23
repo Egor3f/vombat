@@ -7,9 +7,7 @@ plugins {
 android {
     namespace = "com.efprojects.vombatsu_client"
     compileSdk {
-        version = release(37) {
-            minorApiLevel = 2
-        }
+        version = release(37)
     }
 
     defaultConfig {
