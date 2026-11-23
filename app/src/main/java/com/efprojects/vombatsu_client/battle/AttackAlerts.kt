@@ -24,11 +24,13 @@ import com.apollographql.apollo.ApolloClient
 import com.efprojects.vombatsu_client.MainActivity
 import com.efprojects.vombatsu_client.R
 import com.efprojects.vombatsu_client.VombatApp
+import com.efprojects.vombatsu_client.auth.Session
 import com.efprojects.vombatsu_client.graphql.IncomingAttacksQuery
 import com.efprojects.vombatsu_client.settings.AppSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -50,17 +52,22 @@ class AttackAlerts(
     private val context: Context,
     private val apollo: ApolloClient,
     private val settings: AppSettings,
+    private val session: StateFlow<Session>,
 ) {
     private val alarms = context.getSystemService(AlarmManager::class.java)
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     private val notifications = NotificationManagerCompat.from(context)
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    val enabled get() = settings.bugsEnabled.value && settings.attackAlerts.value
+    val enabled get() = active(settings.bugsEnabled.value, settings.attackAlerts.value, session.value)
+
+    // A process started by an alarm never refreshes the session and stays in Unknown,
+    // so Unknown counts as logged in; check() stops alerts when the server reports no user.
+    private fun active(bugs: Boolean, alerts: Boolean, session: Session) = bugs && alerts && session !is Session.Anonymous
 
     fun start() {
         scope.launch {
-            combine(settings.bugsEnabled, settings.attackAlerts) { bugs, alerts -> bugs && alerts }
+            combine(settings.bugsEnabled, settings.attackAlerts, session, ::active)
                 .distinctUntilChanged()
                 .collect { sync() }
         }
@@ -71,9 +78,17 @@ class AttackAlerts(
             createChannel()
             schedule(0)
         } else {
-            alarms.cancel(alarmIntent())
+            stop()
         }
     }
+
+    private fun stop() {
+        alarms.cancel(alarmIntent())
+        notifiedIds().forEach { notifications.cancel(NOTIFICATION_TAG, it) }
+        prefs.edit { remove(KEY_NOTIFIED) }
+    }
+
+    private fun notifiedIds() = prefs.getStringSet(KEY_NOTIFIED, emptySet()).orEmpty().mapNotNull(String::toIntOrNull).toSet()
 
     fun scheduleNext() = schedule(POLL_INTERVAL_MS)
 
@@ -90,9 +105,10 @@ class AttackAlerts(
 
     suspend fun check() {
         val data = apollo.query(IncomingAttacksQuery()).execute().data ?: return
+        if (data.me == null) return stop()
         val now = Instant.now()
         val attacks = data.incomingAttacks(now)
-        val notified = prefs.getStringSet(KEY_NOTIFIED, emptySet()).orEmpty().mapNotNull(String::toIntOrNull).toSet()
+        val notified = notifiedIds()
         val current = attacks.map { it.id }.toSet()
         (notified - current).forEach { notifications.cancel(NOTIFICATION_TAG, it) }
         attacks.filter { it.id !in notified }.forEach { show(it, now) }

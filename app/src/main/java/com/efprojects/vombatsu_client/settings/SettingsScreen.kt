@@ -10,6 +10,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,7 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -44,6 +44,11 @@ import com.efprojects.vombatsu_client.R
 import com.efprojects.vombatsu_client.battle.AttackAlerts
 import com.efprojects.vombatsu_client.content.MAX_CONTENT_WIDTH
 import com.efprojects.vombatsu_client.post.BackButton
+
+private val SETTINGS_PADDING = 16.dp
+private val SETTINGS_ROW_PADDING = 12.dp
+// Material buttons are 40dp tall inside a 48dp touch target, so each has an invisible 4dp margin.
+private val BUTTON_TOUCH_INSET = 4.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,12 +103,23 @@ private fun SettingSwitch(
     onChange: (Boolean) -> Unit,
     enabled: Boolean = true,
 ) {
-    ListItem(
-        headlineContent = { Text(stringResource(title)) },
-        supportingContent = { Text(stringResource(hint)) },
-        trailingContent = { Switch(checked = checked, onCheckedChange = null, enabled = enabled) },
-        modifier = Modifier.toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onChange),
-    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onChange)
+            .padding(horizontal = SETTINGS_PADDING, vertical = SETTINGS_ROW_PADDING),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f).padding(end = SETTINGS_PADDING)) {
+            Text(stringResource(title), style = MaterialTheme.typography.bodyLarge)
+            Text(
+                stringResource(hint),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Switch(checked = checked, onCheckedChange = null, enabled = enabled)
+    }
 }
 
 @Composable
@@ -112,8 +128,8 @@ private fun AttackAlertsExtras(attackAlerts: AttackAlerts) {
     var unrestricted by remember { mutableStateOf(attackAlerts.batteryUnrestricted) }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { unrestricted = attackAlerts.batteryUnrestricted }
     Column(
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.padding(start = SETTINGS_PADDING, end = SETTINGS_PADDING, bottom = SETTINGS_ROW_PADDING),
+        verticalArrangement = Arrangement.spacedBy(SETTINGS_ROW_PADDING - BUTTON_TOUCH_INSET),
     ) {
         OutlinedButton(onClick = { context.startActivity(attackAlerts.soundSettingsIntent()) }) {
             Text(stringResource(R.string.attack_sound_settings))

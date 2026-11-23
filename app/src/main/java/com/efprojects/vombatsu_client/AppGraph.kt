@@ -31,7 +31,7 @@ class AppGraph(context: Context) {
     val notifications = NotificationsRepository(apollo)
     val ignore = IgnoreRepository(apollo)
     val battle = BattleRepository(apollo)
-    val attackAlerts = AttackAlerts(context, apollo, settings)
+    val attackAlerts = AttackAlerts(context, apollo, settings, auth.session)
     val uploader = MediaUploader(httpClient, context.contentResolver)
     val videoJobs = VideoJobs(httpClient)
 }
