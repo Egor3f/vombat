@@ -11,10 +11,12 @@ import com.efprojects.vombatsu_client.content.VideoJobs
 import com.efprojects.vombatsu_client.data.PersistentCookieJar
 import com.efprojects.vombatsu_client.ignore.IgnoreRepository
 import com.efprojects.vombatsu_client.notifications.NotificationsRepository
+import com.efprojects.vombatsu_client.settings.AppSettings
 import okhttp3.OkHttpClient
 
 class AppGraph(context: Context) {
     val cookieJar = PersistentCookieJar(context)
+    val settings = AppSettings(context)
 
     private val httpClient = ErrorLog.okHttp(OkHttpClient.Builder().cookieJar(cookieJar)).build()
 

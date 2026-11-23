@@ -81,6 +81,7 @@ import com.efprojects.vombatsu_client.profile.ProfileScreen
 import com.efprojects.vombatsu_client.profile.ProfileViewModel
 import com.efprojects.vombatsu_client.search.SearchScreen
 import com.efprojects.vombatsu_client.search.SearchViewModel
+import com.efprojects.vombatsu_client.settings.SettingsScreen
 import com.efprojects.vombatsu_client.tag.TagScreen
 import com.efprojects.vombatsu_client.tag.TagViewModel
 import com.efprojects.vombatsu_client.web.WebPageScreen
@@ -95,6 +96,7 @@ private const val ROUTE_EDITOR = "editor"
 private const val ROUTE_PROFILE_SETTINGS = "profile-settings"
 private const val ROUTE_BATTLE = "battle"
 private const val ROUTE_POSTPONED = "postponed"
+private const val ROUTE_SETTINGS = "settings"
 private const val ROUTE_ABOUT = "about"
 private const val ARG_ID = "id"
 private const val ARG_NAME = "name"
@@ -132,12 +134,13 @@ fun VombatNavHost() {
     val savingFilters by sessionViewModel.savingFilters.collectAsStateWithLifecycle()
     val unread by graph.notifications.unread.collectAsStateWithLifecycle()
     val battleUnread by graph.battle.unread.collectAsStateWithLifecycle()
+    val bugsEnabled by graph.settings.bugsEnabled.collectAsStateWithLifecycle()
     val navController = rememberNavController()
     val loggedIn = session is Session.LoggedIn
     val ownLogin = (session as? Session.LoggedIn)?.login
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(loggedIn) {
+    LaunchedEffect(loggedIn, bugsEnabled) {
         if (!loggedIn) {
             graph.notifications.clearCount()
             graph.battle.clear()
@@ -146,7 +149,7 @@ fun VombatNavHost() {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             while (true) {
                 graph.notifications.refreshCount()
-                graph.battle.refresh()
+                if (bugsEnabled) graph.battle.refresh()
                 delay(NOTIFICATIONS_POLL_MS)
             }
         }
@@ -198,13 +201,14 @@ fun VombatNavHost() {
                 val posts = feedViewModel.posts.collectAsLazyPagingItems()
                 val context = LocalContext.current
                 LaunchedEffect(loggedIn) {
-                    if (loggedIn) graph.battle.refresh()
+                    if (loggedIn && bugsEnabled) graph.battle.refresh()
                 }
                 Scaffold(
                     topBar = {
                         VombatTopBar(
                             session = session,
                             hasNotifications = unread > 0,
+                            showBattle = bugsEnabled,
                             hasBattleEvents = battleUnread > 0,
                             savingFilters = savingFilters,
                             onFiltersChange = { changed ->
@@ -223,6 +227,7 @@ fun VombatNavHost() {
                             onProfile = { navController.openUser(it) },
                             onIgnoreList = { navController.navigate(ROUTE_IGNORE) },
                             onPostponed = { navController.navigate(ROUTE_POSTPONED) },
+                            onSettings = { navController.navigate(ROUTE_SETTINGS) },
                             onAbout = { navController.navigate(ROUTE_ABOUT) },
                             onSignOut = sessionViewModel::logout,
                         )
@@ -279,6 +284,7 @@ fun VombatNavHost() {
                     viewModel = profileViewModel,
                     title = login,
                     ownLogin = ownLogin,
+                    bugsEnabled = bugsEnabled,
                     onOpenPost = navController::openPost,
                     onEditProfile = { navController.navigate(ROUTE_PROFILE_SETTINGS) },
                     onBack = navController::popBackStack,
@@ -292,6 +298,9 @@ fun VombatNavHost() {
             }
             composable(ROUTE_POSTPONED) {
                 WebPageScreen(POSTPONED_URL, R.string.postponed_posts, graph.cookieJar, navController::popBackStack)
+            }
+            composable(ROUTE_SETTINGS) {
+                SettingsScreen(graph.settings, navController::popBackStack)
             }
             composable(ROUTE_ABOUT) {
                 AboutScreen(navController::popBackStack)
@@ -353,6 +362,7 @@ fun VombatNavHost() {
 private fun VombatTopBar(
     session: Session,
     hasNotifications: Boolean,
+    showBattle: Boolean,
     hasBattleEvents: Boolean,
     savingFilters: Boolean,
     onFiltersChange: (FeedFilters) -> Unit,
@@ -363,6 +373,7 @@ private fun VombatTopBar(
     onProfile: (String) -> Unit,
     onIgnoreList: () -> Unit,
     onPostponed: () -> Unit,
+    onSettings: () -> Unit,
     onAbout: () -> Unit,
     onSignOut: () -> Unit,
 ) {
@@ -386,13 +397,15 @@ private fun VombatTopBar(
                     ProfileButton { onProfile(session.login) }
                 }
             }
-            DotIconButton(
-                icon = Icons.Outlined.BugReport,
-                description = stringResource(R.string.battle),
-                dot = hasBattleEvents,
-                onClick = onBattle,
-            )
-            MainMenu(session is Session.LoggedIn, onSearch, onIgnoreList, onPostponed, onAbout, onSignOut)
+            if (showBattle) {
+                DotIconButton(
+                    icon = Icons.Outlined.BugReport,
+                    description = stringResource(R.string.battle),
+                    dot = hasBattleEvents,
+                    onClick = onBattle,
+                )
+            }
+            MainMenu(session is Session.LoggedIn, onSearch, onIgnoreList, onPostponed, onSettings, onAbout, onSignOut)
         },
     )
 }
@@ -419,6 +432,7 @@ private fun MainMenu(
     onSearch: () -> Unit,
     onIgnoreList: () -> Unit,
     onPostponed: () -> Unit,
+    onSettings: () -> Unit,
     onAbout: () -> Unit,
     onSignOut: () -> Unit,
 ) {
@@ -452,6 +466,13 @@ private fun MainMenu(
                     },
                 )
             }
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.settings)) },
+                onClick = {
+                    open = false
+                    onSettings()
+                },
+            )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.about)) },
                 onClick = {

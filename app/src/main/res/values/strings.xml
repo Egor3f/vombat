@@ -122,6 +122,9 @@
     <string name="editor_problem_postponed_soon">Дата отложенной публикации не может быть ранее, чем через 10 минут от текущего времени</string>
     <string name="editor_problem_postponed_late">Дата отложенной публикации не может быть позже, чем через 1 неделю от текущего времени</string>
     <string name="postponed_posts">Отложенные посты</string>
+    <string name="settings">Настройки</string>
+    <string name="settings_bugs">Жуки</string>
+    <string name="settings_bugs_hint">Иконка ВомБаттла на панели и кнопка «Кинуть жука» в профиле</string>
     <string name="about">О программе</string>
     <string name="about_unofficial">Неофициальное приложение для сайта vombat.su</string>
     <string name="about_developer">Разработал: Anthropic Claude Opus</string>

@@ -62,6 +62,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel,
     title: String,
     ownLogin: String?,
+    bugsEnabled: Boolean,
     onOpenPost: (Int) -> Unit,
     onEditProfile: () -> Unit,
     onBack: () -> Unit,
@@ -94,7 +95,7 @@ fun ProfileScreen(
                     posts = posts,
                     onOpenPost = onOpenPost,
                     bottomPadding = padding.calculateBottomPadding(),
-                    header = { ProfileHeader(current.value, ignore, isOwn, bugs, viewModel::throwBug) },
+                    header = { ProfileHeader(current.value, ignore, isOwn, bugsEnabled, bugs, viewModel::throwBug) },
                 )
             }
         }
@@ -106,6 +107,7 @@ private fun ProfileHeader(
     profile: Profile,
     ignore: ProfileIgnore?,
     isOwn: Boolean,
+    bugsEnabled: Boolean,
     bugs: Int?,
     onThrowBug: (Int, (ThrowResult) -> Unit) -> Unit,
 ) {
@@ -153,7 +155,9 @@ private fun ProfileHeader(
             if (!isOwn) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     SubscribeButton(profile.id, profile.isSubscribed)
-                    ThrowBugButton(flight, bugs) { onResult -> onThrowBug(profile.id, onResult) }
+                    if (bugsEnabled) {
+                        ThrowBugButton(flight, bugs) { onResult -> onThrowBug(profile.id, onResult) }
+                    }
                 }
                 ignore?.let { UserIgnoreChips(profile.id, it.posts, it.comments) }
             }
