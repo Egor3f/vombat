@@ -8,6 +8,6 @@ class VombatApp : Application() {
     override fun onCreate() {
         super.onCreate()
         ErrorLog.init(this)
-        graph.attackAlerts.sync()
+        graph.attackAlerts.start()
     }
 }

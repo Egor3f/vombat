@@ -53,7 +53,7 @@ fun SettingsScreen(settings: AppSettings, attackAlerts: AttackAlerts, onBack: ()
     val context = LocalContext.current
     val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) {
-            attackAlerts.setEnabled(true)
+            settings.setAttackAlerts(true)
         } else {
             Toast.makeText(context, R.string.notifications_denied, Toast.LENGTH_LONG).show()
         }
@@ -61,7 +61,7 @@ fun SettingsScreen(settings: AppSettings, attackAlerts: AttackAlerts, onBack: ()
     val onAlertsChange = { enable: Boolean ->
         val needsPermission = enable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
             ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
-        if (needsPermission) notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS) else attackAlerts.setEnabled(enable)
+        if (needsPermission) notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS) else settings.setAttackAlerts(enable)
     }
     Scaffold(
         topBar = {
@@ -80,22 +80,29 @@ fun SettingsScreen(settings: AppSettings, attackAlerts: AttackAlerts, onBack: ()
                 SettingSwitch(
                     R.string.settings_attack_alerts,
                     R.string.settings_attack_alerts_hint,
-                    alertsEnabled,
+                    bugsEnabled && alertsEnabled,
                     onAlertsChange,
+                    enabled = bugsEnabled,
                 )
-                if (alertsEnabled) AttackAlertsExtras(attackAlerts)
+                if (bugsEnabled && alertsEnabled) AttackAlertsExtras(attackAlerts)
             }
         }
     }
 }
 
 @Composable
-private fun SettingSwitch(@StringRes title: Int, @StringRes hint: Int, checked: Boolean, onChange: (Boolean) -> Unit) {
+private fun SettingSwitch(
+    @StringRes title: Int,
+    @StringRes hint: Int,
+    checked: Boolean,
+    onChange: (Boolean) -> Unit,
+    enabled: Boolean = true,
+) {
     ListItem(
         headlineContent = { Text(stringResource(title)) },
         supportingContent = { Text(stringResource(hint)) },
-        trailingContent = { Switch(checked = checked, onCheckedChange = null) },
-        modifier = Modifier.toggleable(value = checked, role = Role.Switch, onValueChange = onChange),
+        trailingContent = { Switch(checked = checked, onCheckedChange = null, enabled = enabled) },
+        modifier = Modifier.toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onChange),
     )
 }
 

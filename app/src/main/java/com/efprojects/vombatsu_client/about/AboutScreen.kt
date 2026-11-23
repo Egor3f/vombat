@@ -53,7 +53,6 @@ fun AboutScreen(onBack: () -> Unit) {
             ) {
                 Text(stringResource(R.string.about_unofficial), style = MaterialTheme.typography.bodyLarge)
                 Text(stringResource(R.string.about_developer), style = MaterialTheme.typography.bodyLarge)
-                Text(stringResource(R.string.about_bug_icon), style = MaterialTheme.typography.bodyLarge)
                 val linkStyle = SpanStyle(
                     color = MaterialTheme.colorScheme.primary,
                     textDecoration = TextDecoration.Underline,
@@ -69,6 +68,7 @@ fun AboutScreen(onBack: () -> Unit) {
                     },
                     style = MaterialTheme.typography.bodyLarge,
                 )
+                Text(stringResource(R.string.about_bug_icon), style = MaterialTheme.typography.bodyLarge)
             }
         }
     }

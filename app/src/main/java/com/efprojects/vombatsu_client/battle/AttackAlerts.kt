@@ -28,6 +28,9 @@ import com.efprojects.vombatsu_client.graphql.IncomingAttacksQuery
 import com.efprojects.vombatsu_client.settings.AppSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import java.time.Duration
@@ -51,15 +54,19 @@ class AttackAlerts(
     private val alarms = context.getSystemService(AlarmManager::class.java)
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     private val notifications = NotificationManagerCompat.from(context)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    val enabled get() = settings.attackAlerts.value
+    val enabled get() = settings.bugsEnabled.value && settings.attackAlerts.value
 
-    fun setEnabled(value: Boolean) {
-        settings.setAttackAlerts(value)
-        sync()
+    fun start() {
+        scope.launch {
+            combine(settings.bugsEnabled, settings.attackAlerts) { bugs, alerts -> bugs && alerts }
+                .distinctUntilChanged()
+                .collect { sync() }
+        }
     }
 
-    fun sync() {
+    private fun sync() {
         if (enabled) {
             createChannel()
             schedule(0)
@@ -167,9 +174,7 @@ class AttackAlarmReceiver : BroadcastReceiver() {
     }
 }
 
+// Exists only to start the process after boot or update: VombatApp.onCreate then reschedules the alarms.
 class AttackAlertsRestartReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action != Intent.ACTION_BOOT_COMPLETED && intent.action != Intent.ACTION_MY_PACKAGE_REPLACED) return
-        (context.applicationContext as VombatApp).graph.attackAlerts.sync()
-    }
+    override fun onReceive(context: Context, intent: Intent) = Unit
 }
