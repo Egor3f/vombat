@@ -48,6 +48,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -82,6 +83,7 @@ import com.efprojects.vombatsu_client.content.previewBlockCount
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -101,6 +103,8 @@ fun FeedScreen(
 ) {
     val selected by viewModel.selected.collectAsStateWithLifecycle()
     val tabs = FeedType.entries.filter { it != FeedType.Subscriptions || loggedIn }
+    val listState = key(selected) { rememberLazyListState() }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(loggedIn) {
         if (!loggedIn && selected == FeedType.Subscriptions) viewModel.select(FeedType.Hot)
@@ -114,7 +118,10 @@ fun FeedScreen(
             tabs.forEach { feed ->
                 Tab(
                     selected = feed == selected,
-                    onClick = { viewModel.select(feed) },
+                    onClick = {
+                        if (feed == selected) scope.launch { listState.animateScrollToItem(0) }
+                        else viewModel.select(feed)
+                    },
                     text = { Text(stringResource(feed.title)) },
                     modifier = Modifier.height(FEED_TAB_HEIGHT),
                 )
@@ -126,7 +133,7 @@ fun FeedScreen(
             modifier = Modifier.fillMaxSize(),
         ) {
             key(selected) {
-                PostList(posts, onOpenPost, bottomPadding = contentPadding.calculateBottomPadding())
+                PostList(posts, onOpenPost, contentPadding.calculateBottomPadding(), listState = listState)
             }
         }
     }
@@ -172,6 +179,7 @@ fun PostList(
     onOpenPost: (Int) -> Unit,
     bottomPadding: Dp,
     header: (@Composable () -> Unit)? = null,
+    listState: LazyListState = rememberLazyListState(),
 ) {
     val refresh = posts.loadState.refresh
     if (header == null) {
@@ -187,7 +195,6 @@ fun PostList(
             }
         }
     }
-    val listState = rememberLazyListState()
     TrackViewedPosts(listState)
     LazyColumn(
         state = listState,
