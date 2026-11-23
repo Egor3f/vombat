@@ -20,3 +20,37 @@ mutation UseTool($tool: String!, $targetUserId: Int) {
     }
   }
 }
+
+query IncomingAttacks {
+  me {
+    id
+  }
+  gameState {
+    pending_interactions {
+      id
+      type
+      status
+      tool_duration
+      created_at_iso
+      source_user {
+        login
+      }
+      target_user {
+        id
+      }
+      tool {
+        name
+      }
+      messages {
+        male {
+          message
+          pronoun
+        }
+        default {
+          message
+          pronoun
+        }
+      }
+    }
+  }
+}

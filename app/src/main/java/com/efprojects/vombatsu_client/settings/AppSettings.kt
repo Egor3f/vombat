@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 private const val PREFS_NAME = "settings"
 private const val KEY_BUGS = "bugs_enabled"
+private const val KEY_ATTACK_ALERTS = "attack_alerts_enabled"
 
 class AppSettings(context: Context) {
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -18,5 +19,13 @@ class AppSettings(context: Context) {
     fun setBugsEnabled(value: Boolean) {
         prefs.edit { putBoolean(KEY_BUGS, value) }
         _bugsEnabled.value = value
+    }
+
+    private val _attackAlerts = MutableStateFlow(prefs.getBoolean(KEY_ATTACK_ALERTS, false))
+    val attackAlerts: StateFlow<Boolean> = _attackAlerts.asStateFlow()
+
+    fun setAttackAlerts(value: Boolean) {
+        prefs.edit { putBoolean(KEY_ATTACK_ALERTS, value) }
+        _attackAlerts.value = value
     }
 }

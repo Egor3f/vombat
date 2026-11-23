@@ -53,11 +53,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.efprojects.vombatsu_client.about.AboutScreen
 import com.efprojects.vombatsu_client.actions.ActionContext
 import com.efprojects.vombatsu_client.actions.LocalActions
 import com.efprojects.vombatsu_client.auth.FeedFilters
+import com.efprojects.vombatsu_client.battle.BATTLE_DEEP_LINK
 import com.efprojects.vombatsu_client.auth.LoginScreen
 import com.efprojects.vombatsu_client.auth.LoginViewModel
 import com.efprojects.vombatsu_client.auth.Session
@@ -293,14 +295,14 @@ fun VombatNavHost() {
             composable(ROUTE_PROFILE_SETTINGS) {
                 WebPageScreen(SETTINGS_URL, R.string.edit_profile, graph.cookieJar, navController::popBackStack)
             }
-            composable(ROUTE_BATTLE) {
+            composable(ROUTE_BATTLE, deepLinks = listOf(navDeepLink { uriPattern = BATTLE_DEEP_LINK })) {
                 WebPageScreen(BATTLE_URL, R.string.battle, graph.cookieJar, navController::popBackStack)
             }
             composable(ROUTE_POSTPONED) {
                 WebPageScreen(POSTPONED_URL, R.string.postponed_posts, graph.cookieJar, navController::popBackStack)
             }
             composable(ROUTE_SETTINGS) {
-                SettingsScreen(graph.settings, navController::popBackStack)
+                SettingsScreen(graph.settings, graph.attackAlerts, navController::popBackStack)
             }
             composable(ROUTE_ABOUT) {
                 AboutScreen(navController::popBackStack)

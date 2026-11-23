@@ -6,6 +6,7 @@ import com.apollographql.apollo.network.okHttpClient
 import com.efprojects.vombatsu_client.actions.ActionsRepository
 import com.efprojects.vombatsu_client.actions.MediaUploader
 import com.efprojects.vombatsu_client.auth.AuthRepository
+import com.efprojects.vombatsu_client.battle.AttackAlerts
 import com.efprojects.vombatsu_client.battle.BattleRepository
 import com.efprojects.vombatsu_client.content.VideoJobs
 import com.efprojects.vombatsu_client.data.PersistentCookieJar
@@ -30,6 +31,7 @@ class AppGraph(context: Context) {
     val notifications = NotificationsRepository(apollo)
     val ignore = IgnoreRepository(apollo)
     val battle = BattleRepository(apollo)
+    val attackAlerts = AttackAlerts(context, apollo, settings)
     val uploader = MediaUploader(httpClient, context.contentResolver)
     val videoJobs = VideoJobs(httpClient)
 }
