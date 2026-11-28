@@ -37,6 +37,10 @@
     <string name="filter_save_error">Не удалось сохранить настройку</string>
     <string name="video_processing">Видео обрабатывается…</string>
     <string name="video_processing_failed">Ошибка обработки видео</string>
+    <string name="copy">Копировать</string>
+    <string name="copy_image_label">Картинка</string>
+    <string name="copy_image_done">Картинка скопирована</string>
+    <string name="copy_image_failed">Не удалось скопировать картинку</string>
     <string name="media_unavailable">Не удалось загрузить файл</string>
     <string name="back">Назад</string>
     <string name="post_title">Пост</string>

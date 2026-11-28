@@ -8,16 +8,20 @@ import androidx.annotation.OptIn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,21 +30,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.round
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -61,6 +71,7 @@ import coil3.compose.AsyncImage
 import com.efprojects.vombatsu_client.ErrorLog
 import com.efprojects.vombatsu_client.R
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 private const val FALLBACK_ASPECT = 16f / 9f
 private const val VIDEO_JOB_POLL_MS = 10_000L
@@ -92,12 +103,30 @@ private fun ImageView(image: Media.Image, modifier: Modifier) {
     }
     val url = imageUrl(image.path, contentWidthPx())
     var failed by remember(url) { mutableStateOf(false) }
+    var menuAt by remember { mutableStateOf<Offset?>(null) }
+    val haptics = LocalHapticFeedback.current
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
     Box(
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(if (failed) FALLBACK_ASPECT else aspect)
             .clip(MEDIA_SHAPE)
-            .background(MaterialTheme.colorScheme.surfaceVariant),
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .then(
+                if (failed) {
+                    Modifier
+                } else {
+                    Modifier.pointerInput(Unit) {
+                        detectTapGestures(
+                            onLongPress = {
+                                haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                                menuAt = it
+                            },
+                        )
+                    }
+                },
+            ),
         contentAlignment = Alignment.Center,
     ) {
         if (failed) {
@@ -109,6 +138,28 @@ private fun ImageView(image: Media.Image, modifier: Modifier) {
                 contentScale = ContentScale.Fit,
                 onError = { failed = true },
                 modifier = Modifier.fillMaxSize(),
+            )
+        }
+        menuAt?.let { at ->
+            CopyImageMenu(
+                modifier = Modifier.align(Alignment.TopStart).offset { at.round() },
+                onCopy = { scope.launch { copyImage(context, image.path) } },
+                onDismiss = { menuAt = null },
+            )
+        }
+    }
+}
+
+@Composable
+private fun CopyImageMenu(modifier: Modifier, onCopy: () -> Unit, onDismiss: () -> Unit) {
+    Box(modifier) {
+        DropdownMenu(expanded = true, onDismissRequest = onDismiss) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.copy)) },
+                onClick = {
+                    onDismiss()
+                    onCopy()
+                },
             )
         }
     }
